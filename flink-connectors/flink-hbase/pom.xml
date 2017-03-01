@@ -211,6 +211,12 @@ under the License.
 			<artifactId>hadoop-minicluster</artifactId>
 			<version>${hadoop.version}</version>
 			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>com.mapr.hadoop</groupId>
+					<artifactId>maprfs</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>

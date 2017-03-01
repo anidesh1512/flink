@@ -119,6 +119,12 @@ under the License.
 			<scope>test</scope>
 			<type>test-jar</type>
 			<version>${hadoop.version}</version><!--$NO-MVN-MAN-VER$-->
+			<exclusions>
+				<exclusion>
+					<groupId>com.mapr.hadoop</groupId>
+					<artifactId>maprfs</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>

@@ -51,5 +51,7 @@ log_setting="-Dlog.file="$log" -Dlog4j.configuration=file:"$FLINK_CONF_DIR"/log4
 
 export FLINK_CONF_DIR
 
-$JAVA_RUN $JVM_ARGS -classpath "$CC_CLASSPATH" $log_setting org.apache.flink.yarn.cli.FlinkYarnSessionCli -j "$FLINK_LIB_DIR"/flink-dist*.jar "$@"
+MAPR_SECURITY_CONFIG="-Djava.security.auth.login.config=/opt/mapr/conf/mapr.login.conf"
+
+$JAVA_RUN $JVM_ARGS -classpath "$CC_CLASSPATH:/opt/mapr/lib/*" $MAPR_SECURITY_CONFIG $log_setting org.apache.flink.yarn.cli.FlinkYarnSessionCli -j "$FLINK_LIB_DIR"/flink-dist*.jar "$@"
 

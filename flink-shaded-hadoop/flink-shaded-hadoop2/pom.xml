@@ -154,6 +154,10 @@ under the License.
 					<groupId>commons-beanutils</groupId>
 					<artifactId>commons-beanutils</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>com.mapr.hadoop</groupId>
+					<artifactId>maprfs</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 
