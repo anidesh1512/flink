@@ -33,6 +33,7 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.fs.permission.FsAction;
 import org.apache.hadoop.fs.permission.FsPermission;
 import org.apache.hadoop.security.UserGroupInformation;
+import org.apache.hadoop.security.UserGroupInformation.AuthenticationMethod;
 import org.apache.hadoop.yarn.api.ApplicationConstants;
 import org.apache.hadoop.yarn.api.protocolrecords.GetNewApplicationResponse;
 import org.apache.hadoop.yarn.api.records.ApplicationId;
@@ -410,6 +411,7 @@ public abstract class AbstractYarnClusterDescriptor implements ClusterDescriptor
 				// so we check only in ticket cache scenario.
 				boolean useTicketCache = flinkConfiguration.getBoolean(SecurityOptions.KERBEROS_LOGIN_USETICKETCACHE);
 				UserGroupInformation loginUser = UserGroupInformation.getCurrentUser();
+				LOG.info("THE MAPR AUTHENTICATION METHOD FOR GIVEN USER IS: {}", loginUser.getAuthenticationMethod());
 				if (useTicketCache && !loginUser.hasKerberosCredentials()) {
 					LOG.error("Hadoop security is enabled but the login user does not have Kerberos credentials");
 					throw new RuntimeException("Hadoop security is enabled but the login user " +
