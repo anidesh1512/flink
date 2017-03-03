@@ -69,15 +69,7 @@ import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static org.apache.flink.configuration.ConfigConstants.ENV_FLINK_LIB_DIR;
 import static org.apache.flink.yarn.cli.FlinkYarnSessionCli.CONFIG_FILE_LOG4J_NAME;
@@ -411,8 +403,9 @@ public abstract class AbstractYarnClusterDescriptor implements ClusterDescriptor
 				// so we check only in ticket cache scenario.
 				boolean useTicketCache = flinkConfiguration.getBoolean(SecurityOptions.KERBEROS_LOGIN_USETICKETCACHE);
 				UserGroupInformation loginUser = UserGroupInformation.getCurrentUser();
-				LOG.info("THE MAPR AUTHENTICATION METHOD FOR GIVEN USER IS: {}", loginUser.getAuthenticationMethod());
-				if (useTicketCache && !loginUser.hasKerberosCredentials()) {
+				UserGroupInformation.AuthenticationMethod authMethod = loginUser.getAuthenticationMethod();
+				LOG.info("THE MAPR AUTHENTICATION METHOD FOR GIVEN USER IS: {}", authMethod);
+				if (Objects.equals(authMethod, AuthenticationMethod.KERBEROS) && useTicketCache && !loginUser.hasKerberosCredentials()) {
 					LOG.error("Hadoop security is enabled but the login user does not have Kerberos credentials");
 					throw new RuntimeException("Hadoop security is enabled but the login user " +
 							"does not have Kerberos credentials");
